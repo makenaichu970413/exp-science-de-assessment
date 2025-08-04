@@ -67,6 +67,21 @@ The scraping process involves:
    - Detailed error logging for failed scrapes
    - [Final report generated with statistics](document/de_expsc_assessment_scrape_result.md)
 
+## GitHub API Endpoints Used
+
+The following GitHub API endpoints are used for data scraping:
+
+- **Repository Issues**:
+    - Method: `GET`
+    - Path: `/repos/{owner}/{repo}/issues`
+    - Parameters: `state=all`, `per_page=100`, `page={page_number}`
+    - Example: `https://api.github.com/repos/Uniswap/v3-core/issues?state=all&per_page=100&page=1`
+
+- **Repository Issue Comments**:
+    - Method: `GET`
+    - Path: `/repos/{owner}/{repo}/issues/{issue_number}/comments`
+    - Example: `https://api.github.com/repos/Uniswap/v3-core/issues/1049/comments`
+
 ## Spark Analysis
 
 ![Data Analysis Workflow](document/de_expsc_assessment_spark_flow.png)
