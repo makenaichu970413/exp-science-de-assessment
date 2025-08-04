@@ -161,7 +161,7 @@
 
 #### SQL Query
 
-[Implementation in `sql/average_resolution_by_month.sql`](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/sql/average_resolution_by_month.sql)
+[Implementation in `sql/average_resolution_by_month.sql`](sql/average_resolution_by_month.sql)
 
 ```sql
         SELECT
@@ -292,4 +292,3 @@
 |2025-06|2    |1         |100.0            |
 |2025-07|8    |2         |300.0            |
 +-------+-----+----------+-----------------+
-```
