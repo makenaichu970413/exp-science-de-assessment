@@ -33,6 +33,22 @@ python -B main.py
 - **Analysis Report**: [Comprehensive results](document/de_expsc_assessment_spark_result.md) of the Spark data analysis
 - **SQL Queries Script**: Implementation of [`average_resolution_by_month.sql`](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/sql/average_resolution_by_month.sql) used in Spark analysis
 
+## GitHub API Endpoints Used
+
+The following GitHub API endpoints are used for data scraping:
+
+- **Repository Issues**:
+
+  - Method: `GET`
+  - Path: `/repos/{owner}/{repo}/issues`
+  - Parameters: `state=all`, `per_page=100`, `page={page_number}`
+  - Example: `https://api.github.com/repos/Uniswap/v3-core/issues?state=all&per_page=100&page=1`
+
+- **Repository Issue Comments**:
+  - Method: `GET`
+  - Path: `/repos/{owner}/{repo}/issues/{issue_number}/comments`
+  - Example: `https://api.github.com/repos/Uniswap/v3-core/issues/1049/comments`
+
 ## Scrape Data
 
 ![Data Scraping Workflow](document/de_expsc_assessment_scrape_flow.png)
@@ -66,21 +82,6 @@ The scraping process involves:
    - Repository status updated to `COMPLETE` after success
    - Detailed error logging for failed scrapes
    - [Final report generated with statistics](document/de_expsc_assessment_scrape_result.md)
-
-## GitHub API Endpoints Used
-
-The following GitHub API endpoints are used for data scraping:
-
-- **Repository Issues**:
-    - Method: `GET`
-    - Path: `/repos/{owner}/{repo}/issues`
-    - Parameters: `state=all`, `per_page=100`, `page={page_number}`
-    - Example: `https://api.github.com/repos/Uniswap/v3-core/issues?state=all&per_page=100&page=1`
-
-- **Repository Issue Comments**:
-    - Method: `GET`
-    - Path: `/repos/{owner}/{repo}/issues/{issue_number}/comments`
-    - Example: `https://api.github.com/repos/Uniswap/v3-core/issues/1049/comments`
 
 ## Spark Analysis
 
