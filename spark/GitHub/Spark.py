@@ -29,28 +29,3 @@ def run():
 
     # ? Terminate Spark After run completely
     spark.stop()
-
-
-# In Power Shell, force the use of the system `JAVA_HOME` by:
-# JAVA
-# $env:JAVA_HOME = [System.Environment]::GetEnvironmentVariable('JAVA_HOME', 'Machine')
-# $env:Path = "$($env:JAVA_HOME)\bin;" + $env:Path
-# java --version
-# $env:Path += ';C:\Program Files\Java\jdk-17'
-
-# Hadoop
-# Test-Path "C:\Program Files\Hadoop\hadoop-3.3.6\bin\winutils.exe"
-# $env:Path += ';C:\Program Files\Hadoop\hadoop-3.3.6\bin'
-# winutils version
-
-#! RESTART COMPUTER
-
-
-"""
-Security Restrictions: Java 24 introduced stronger security restrictions. 
-The method Subject.getSubject() is now considered a restricted method that 
-requires explicit permission (--enable-native-access=ALL-UNNAMED) which 
-wasn't enabled.
-
-https://github.com/cdarlint/winutils/tree/master
-"""
