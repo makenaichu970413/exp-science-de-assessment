@@ -64,7 +64,7 @@ The scraping process involves:
 5. **Status Tracking & Reporting**:
    - Repository status updated to `COMPLETE` after success
    - Detailed error logging for failed scrapes
-   - Final report generated with statistics
+   - [Final report generated with statistics](document/de_expsc_assessment_scrape_result.md)
 
 ## Spark Analysis
 
@@ -99,8 +99,7 @@ The Spark analysis process involves:
    - Generates repository health metrics
 
 5. **Result Output**:
-   - Analysis results saved in multiple formats (CSV, Parquet)
-   - Summary statistics and visualizations generated
+   - [Summary of statistical results and visualizations generated](document/de_expsc_assessment_spark_result.md)
 
 ## Features
 
