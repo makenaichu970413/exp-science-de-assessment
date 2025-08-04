@@ -161,7 +161,7 @@
 
 #### SQL Query
 
-[Implementation in SparkIssue.py](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/spark/GitHub/SparkIssue.py#L134)
+[Implementation in SparkIssue.py](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/sql/average_resolution_by_month.sql)
 
 ```sql
         SELECT
