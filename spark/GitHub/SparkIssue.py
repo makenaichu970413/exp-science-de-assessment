@@ -1,4 +1,5 @@
 # Library
+import logging
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import (
     avg,
@@ -12,6 +13,7 @@ from pyspark.sql.functions import (
 )
 from pyspark.sql import Window
 import matplotlib.pyplot as plt
+import os
 
 
 # Schema
@@ -19,6 +21,7 @@ from spark.GitHub.SparkSchema import schema_issue
 
 
 # Utils
+from utils.constant import FOLDER_SQL
 from utils.function.FuncSpark import import_spark_csv, schema_nested_parsed
 
 
@@ -131,22 +134,22 @@ def sql_analysis_average_resolution(spark: SparkSession, df: DataFrame) -> DataF
 
     df.createOrReplaceTempView("issues")
 
-    sql_query = """
-        SELECT
-            DATE_FORMAT(created_at, 'yyyy-MM') AS month,
-            ROUND(AVG(DATEDIFF(closed_at, created_at)), 2) AS avg_resolution_days
-        FROM issues
-        WHERE state = 'closed'
-        GROUP BY month
-        ORDER BY month
-    """
+    df_res = df
+    try:
 
-    df_res = spark.sql(sql_query)
+        file_path = f"{FOLDER_SQL}/average_resolution_by_month.sql"
+        with open(file_path, "r") as file:
+            sql_query = file.read()
 
-    total = df_res.count()
+        df_res = spark.sql(sql_query)
 
-    print(f"\n✨ SQL Query : Average resolution time by month")
-    print(f'Total "{total}" records')
-    df_res.show(n=total, truncate=False)
+        total = df_res.count()
+
+        print(f"\n✨ SQL Query : Average resolution time by month")
+        print(f'Total "{total}" records')
+        df_res.show(n=total, truncate=False)
+
+    except Exception as err:
+        logging.error(f'❌ SPARK_ERROR in "sql_analysis_average_resolution()" : {err}')
 
     return df_res
