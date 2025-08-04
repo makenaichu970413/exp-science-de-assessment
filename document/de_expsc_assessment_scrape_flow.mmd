@@ -1,0 +1,42 @@
+flowchart TD
+    A([Start]) --> B[Initialize DB Tables]
+    B --> C{DB Initialized?}
+    C -->|No| D[Exit Scraping]
+    C -->|Yes| E[Read URLs from Excel/DB]
+    E --> F{URLs Found?}
+    F -->|No| G[Generate Report\nExit]
+    F -->|Yes| H[Loop Through URLs]
+    H --> I[Update Repo Status: PROCESS]
+    I --> J[Scrape Issues]
+    
+    subgraph "Issue Scraping"
+        J --> K{Page Data in Temp?}
+        K -->|Yes| L[Read from Temp]
+        K -->|No| M[Call GitHub API]
+        M --> N{Success?}
+        N -->|No| O["Retry? (max 3)"]
+        O -->|Attempt < 3| M
+        O -->|Max Attempts| P[Log Error]
+        N -->|Yes| Q[Save to Temp]
+        Q --> R[Export to CSV]
+    end
+    
+    J --> S[Filter Issues with Comments]
+    S --> T[Scrape Comments]
+    
+    subgraph "Comment Scraping"
+        T --> U{Issue in DB Log?}
+        U -->|Pending/Process/Failed| V[Call GitHub API]
+        V --> W{Success?}
+        W -->|No| X["Retry? (max 3)"]
+        X -->|Attempt < 3| V
+        X -->|Max Attempts| Y[Log Error]
+        W -->|Yes| Z[Save to Temp]
+        Z --> AA[Export to CSV]
+    end
+    
+    T --> AB[Update Repo Status: COMPLETE]
+    AB --> AC{More URLs?}
+    AC -->|Yes| H
+    AC -->|No| AD[Generate Final Report]
+    AD --> AE([End])

@@ -1,0 +1,10 @@
+flowchart TD
+    A[CSV Data Files] --> B[SparkInit.py]
+    B -->|Initialize Spark Session| C[Spark.py]
+    C --> D[SparkIssue.py]
+    C --> E[SparkComment.py]
+    F[SparkSchema.py] -->|Provide Schema| D
+    F -->|Provide Schema| E
+    D -->|Processed Issue Data| G[Analysis Operations]
+    E -->|Processed Comment Data| G
+    G --> H[Output Results]
