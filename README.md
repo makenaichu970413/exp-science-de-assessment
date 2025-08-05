@@ -73,7 +73,7 @@ Menu:
 [1] Scrape GitHub Issues & Comments Data
 [2] Spark Analysis of GitHub Issues & Comments Data
 [3] Exit
-Enter your choice (1-3): 1
+Enter your choice (1-3): 
 ```
 
 1. **Scrape GitHub Issues & Comments Data**: Collects issue and comment data from GitHub repositories
