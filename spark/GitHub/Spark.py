@@ -23,7 +23,7 @@ def run():
     SparkIssue.sql_analysis_average_resolution(spark, df_issue)
 
     df_issue_res = SparkIssue.analysis_creation_trend(df_issue)
-    # Visualize the monthly issue createion trend
+    # ? Visualize the monthly issue createion trend
     title = f'Monthly Issue Creation Trend of "{csv_issue_file}"'
     SparkIssue.visualize_creation_trend(df_issue_res, title)
 
