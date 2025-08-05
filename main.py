@@ -8,10 +8,6 @@ from spark.GitHub import Spark as GitHubSpark
 from utils.function.FuncFile import export_csv_comments, export_csv_issues
 
 
-# Run with `-B`` flag to prevent "__pycache__/"
-# python -B main.py
-
-
 def github():
 
     while True:

@@ -64,6 +64,8 @@ Run the application:
 python -B main.py
 ```
 
+Use the `-B` flag to prevent creating `__pycache__` directories.
+
 ### Menu Options
 
 1. **Scrape GitHub Issues & Comments Data**: Collects issue and comment data from GitHub repositories
