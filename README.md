@@ -10,6 +10,17 @@ This project scrapes GitHub issues and comments, then performs Spark analysis on
 - **Analysis Report**: [Comprehensive results](document/de_expsc_assessment_spark_result.md) of the Spark data analysis
 - **SQL Script**: Implementation of [`average_resolution_by_month.sql`](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/sql/average_resolution_by_month.sql) used in Spark analysis
 
+## Features
+
+- **GitHub Data Scraping**: Automated collection of issues and comments with retry mechanism
+- **Data Validation**: Robust validation using `Pydantic` models to ensure data quality
+- **Spark Data Analysis**: Advanced processing of GitHub data including nested structure handling
+- **Menu-Driven Interface**: User-friendly console interface for easy operation
+- **Data Persistence**: Flexible storage options (CSV, JSON, SQLite)
+- **Workflow Visualization**: Mermaid diagrams documenting data flows
+- **Error Handling**: Comprehensive logging and status tracking
+- **Reporting**: Automated report generation for scraping and analysis results
+
 ## Installation
 
 1. Clone this repository
@@ -143,14 +154,3 @@ The Spark analysis process involves:
 
 5. **Result Output**:
    - [Summary of statistical results and visualizations generated](document/de_expsc_assessment_spark_result.md)
-
-## Features
-
-- **GitHub Data Scraping**: Automated collection of issues and comments with retry mechanism
-- **Data Validation**: Robust validation using `Pydantic` models to ensure data quality
-- **Spark Data Analysis**: Advanced processing of GitHub data including nested structure handling
-- **Menu-Driven Interface**: User-friendly console interface for easy operation
-- **Data Persistence**: Flexible storage options (CSV, JSON, SQLite)
-- **Workflow Visualization**: Mermaid diagrams documenting data flows
-- **Error Handling**: Comprehensive logging and status tracking
-- **Reporting**: Automated report generation for scraping and analysis results
