@@ -103,6 +103,15 @@ The following GitHub API endpoints are used for data scraping:
   - Path: `/repos/{owner}/{repo}/issues/{issue_number}/comments`
   - Example: `https://api.github.com/repos/Uniswap/v3-core/issues/1049/comments`
 
+**Note on Rate Limits**:
+- Without authentication, the rate limit is 60 requests per hour.
+- With a personal access token, the rate limit increases to 5,000 requests per hour.
+
+Include the token in the [request header](here) when making API calls:
+```http
+Authorization: Bearer YOUR_GITHUB_TOKEN
+```
+
 ## Scrape Data
 
 ![Data Scraping Workflow](document/de_expsc_assessment_scrape_flow.png)
