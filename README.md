@@ -70,7 +70,14 @@ python -B main.py
 2. **Spark Analysis**: Performs data analysis on collected GitHub data using PySpark
 3. **Exit**: Quits the application
 
-## GitHub API Endpoints Used
+### Folder Structure
+
+- **[`input/`](input/)**: Contains the `github_urls.xlsx` file which stores GitHub repository URLs. The web scraping process automatically extracts URLs from this file at startup.
+- **[`temp/`](temp/)**: Stores intermediate scraped data (issues and comments) from each API request. Used to resume scraping if the process is interrupted.
+- **[`log/`](log/)**: Contains database log files tracking the status (PENDING, PROCESS, FAILED, COMPLETE) of each API request during scraping.
+- **[`output/`](output/)**: Holds the final exported CSV files after successful completion of the scraping process.
+
+### GitHub API Endpoints Used
 
 The following GitHub API endpoints are used for data scraping:
 
