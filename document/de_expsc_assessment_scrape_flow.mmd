@@ -2,41 +2,43 @@ flowchart TD
     A([Start]) --> B[Initialize DB Tables]
     B --> C{DB Initialized?}
     C -->|No| D[Exit Scraping]
-    C -->|Yes| E[Read URLs from Excel/DB]
-    E --> F{URLs Found?}
-    F -->|No| G[Generate Report\nExit]
-    F -->|Yes| H[Loop Through URLs]
-    H --> I[Update Repo Status: PROCESS]
-    I --> J[Scrape Issues]
+    C -->|Yes| E[Read URLs from Excel]
+    E --> F[Insert New URLs to DB with Status: PENDING & skip existing]
+    F --> G[Find URLs with Status: PENDING]
+    G --> H{URLs Found?}
+    H -->|No| I[Generate Report & Exit]
+    H -->|Yes| J[Loop Through URLs]
+    J --> K[Update Repo Status: PROCESS]
+    K --> L[Scrape Issues]
     
     subgraph "Issue Scraping"
-        J --> K{Page Data in Temp?}
-        K -->|Yes| L[Read from Temp]
-        K -->|No| M[Call GitHub API]
-        M --> N{Success?}
-        N -->|No| O["Retry? (max 3)"]
-        O -->|Attempt < 3| M
-        O -->|Max Attempts| P[Log Error]
-        N -->|Yes| Q[Save to Temp]
-        Q --> R[Export to CSV]
+        L --> M{Page Data in Temp?}
+        M -->|Yes| N[Read from Temp]
+        M -->|No| O[Call GitHub API]
+        O --> P{Success?}
+        P -->|No| Q["Retry? (max 3)"]
+        Q -->|Attempt < 3| O
+        Q -->|Max Attempts| R[Log Error]
+        P -->|Yes| S[Save to Temp]
+        S --> T[Export to CSV]
     end
     
-    J --> S[Filter Issues with Comments]
-    S --> T[Scrape Comments]
+    L --> U[Filter Issues with Comments]
+    U --> V[Scrape Comments]
     
     subgraph "Comment Scraping"
-        T --> U{Issue in DB Log?}
-        U -->|Pending/Process/Failed| V[Call GitHub API]
-        V --> W{Success?}
-        W -->|No| X["Retry? (max 3)"]
-        X -->|Attempt < 3| V
-        X -->|Max Attempts| Y[Log Error]
-        W -->|Yes| Z[Save to Temp]
-        Z --> AA[Export to CSV]
+        V --> W{Issue in DB Log?}
+        W -->|Pending/Process/Failed| X[Call GitHub API]
+        X --> Y{Success?}
+        Y -->|No| Z["Retry? (max 3)"]
+        Z -->|Attempt < 3| X
+        Z -->|Max Attempts| AA[Log Error]
+        Y -->|Yes| AB[Save to Temp]
+        AB --> AC[Export to CSV]
     end
     
-    T --> AB[Update Repo Status: COMPLETE]
-    AB --> AC{More URLs?}
-    AC -->|Yes| H
-    AC -->|No| AD[Generate Final Report]
-    AD --> AE([End])
+    V --> AD[Update Repo Status: COMPLETE]
+    AD --> AE{More URLs?}
+    AE -->|Yes| J
+    AE -->|No| AF[Generate Final Report]
+    AF --> AG([End])

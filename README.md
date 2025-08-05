@@ -13,6 +13,30 @@ This project scrapes GitHub issues and comments, then performs Spark analysis on
 pip install -r requirements.txt
 ```
 
+## Configuration
+
+The project requires a `.env` file in the root directory with the following environment variables. Customize these values according to your specific setup:
+
+```env
+# GitHub CCC personal access token
+GITHUB_TOKEN=your_github_token_here
+
+# Java and Hadoop paths (Windows example)
+JAVA_HOME="C:\\Program Files\\Java\\jdk-17"
+HADOOP_HOME="C:\\Program Files\\Hadoop\\hadoop-3.3.6"
+```
+
+**Important Security Note**:
+
+- Replace `your_github_token_here` with a valid [GitHub personal access token](https://github.com/settings/tokens)
+- The token needs `repo` scope access to read repository issues
+
+**Version Compatibility**:
+
+- PySpark 4.0
+- Hadoop 3.3.6
+- Java 17+
+
 ## Usage
 
 Run the application:
@@ -31,7 +55,7 @@ python -B main.py
 
 - **Scraping Report**: [Detailed statistics and logs](document/de_expsc_assessment_scrape_result.md) from the GitHub data collection process
 - **Analysis Report**: [Comprehensive results](document/de_expsc_assessment_spark_result.md) of the Spark data analysis
-- **SQL Queries Script**: Implementation of [`average_resolution_by_month.sql`](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/sql/average_resolution_by_month.sql) used in Spark analysis
+- **SQL Script**: Implementation of [`average_resolution_by_month.sql`](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/sql/average_resolution_by_month.sql) used in Spark analysis
 
 ## GitHub API Endpoints Used
 
@@ -57,8 +81,10 @@ The scraping process involves:
 
 1. **Initialization**:
 
-   - Database tables initialized for logging
-   - Repository URLs loaded from Excel/DB
+   - Check database initialization status
+   - Exit scraping if database not initialized
+   - Read repository URLs from Excel file
+   - Insert new URLs to database with status: PENDING (skip existing)
 
 2. **Repository Processing**:
 
