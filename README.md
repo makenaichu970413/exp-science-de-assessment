@@ -107,7 +107,7 @@ The following GitHub API endpoints are used for data scraping:
 - Without authentication, the rate limit is 60 requests per hour.
 - With a personal access token, the rate limit increases to 5,000 requests per hour.
 
-Include the token in the [request header](here) when making API calls:
+Include the token in the [request header](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/utils/function/FuncRequest.py#L81) when making API calls:
 ```http
 Authorization: Bearer YOUR_GITHUB_TOKEN
 ```
