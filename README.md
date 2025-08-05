@@ -68,6 +68,14 @@ Use the `-B` flag to prevent creating `__pycache__` directories.
 
 ### Menu Options
 
+```shell
+Menu:
+[1] Scrape GitHub Issues & Comments Data
+[2] Spark Analysis of GitHub Issues & Comments Data
+[3] Exit
+Enter your choice (1-3): 1
+```
+
 1. **Scrape GitHub Issues & Comments Data**: Collects issue and comment data from GitHub repositories
 2. **Spark Analysis**: Performs data analysis on collected GitHub data using PySpark
 3. **Exit**: Quits the application
