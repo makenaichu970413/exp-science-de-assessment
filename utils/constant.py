@@ -17,6 +17,11 @@ GITHUB_TOKEN: str | None = os.getenv("GITHUB_TOKEN")
 GITHUB_API_VERSION = "2022-11-28"  #! GITHUB API Latest version
 GITHUB_MAX_PER_PAGE = 100
 
+
+JAVA_HOME: str | None = os.getenv("JAVA_HOME")
+HADOOP_HOME: str | None = os.getenv("HADOOP_HOME")
+
+
 BRIGHTDATA_ZONE: str | None = os.getenv("BRIGHTDATA_ZONE")
 BRIGHTDATA_USER: str | None = os.getenv("BRIGHTDATA_USER")
 BRIGHTDATA_PASS: str | None = os.getenv("BRIGHTDATA_PASS")

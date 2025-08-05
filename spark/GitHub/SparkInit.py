@@ -7,19 +7,17 @@ import os
 import sys
 
 # Utils
-from utils.constant import FOLDER_SPARK_TEMP
+from utils.constant import FOLDER_SPARK_TEMP, HADOOP_HOME, JAVA_HOME
 
 
 def init() -> SparkSession:
 
     os.environ["HADOOP_USER_NAME"] = getpass.getuser()
     os.environ["HADOOP_SECURITY_AUTHENTICATION"] = "simple"
-    os.environ["JAVA_HOME"] = "C:\\Program Files\\Java\\jdk-17"
-    os.environ["HADOOP_HOME"] = "C:\\Program Files\\Hadoop\\hadoop-3.3.6"
     os.environ["PYSPARK_PYTHON"] = sys.executable
     os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
-    print(f"Using JAVA_HOME: {os.environ['JAVA_HOME']}")
-    print(f"Using HADOOP_HOME: {os.environ['HADOOP_HOME']}")
+    print(f"Using JAVA_HOME: {JAVA_HOME}")
+    print(f"Using HADOOP_HOME: {HADOOP_HOME}")
 
     app_name = "GitHubAnalysis"
     # Configuration
