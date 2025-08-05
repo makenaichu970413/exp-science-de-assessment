@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project scrapes GitHub issues and comments, then performs Spark analysis on the collected data. The system provides a menu-driven interface for easy operation.
+This project scrapes GitHub issues and comments, then performs Spark analysis on the collected data. The system provides a [menu-driven interface](#menu-options) for easy operation.
 
 ## Output Reports
 
@@ -58,7 +58,7 @@ HADOOP_HOME="C:\\Program Files\\Hadoop\\hadoop-3.3.6"
 
 ## Usage
 
-### Run the application:
+### Run Application
 
 ```bash
 python -B main.py
