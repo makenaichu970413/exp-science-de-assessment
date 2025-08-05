@@ -4,6 +4,12 @@
 
 This project scrapes GitHub issues and comments, then performs Spark analysis on the collected data. The system provides a menu-driven interface for easy operation.
 
+## Output Reports
+
+- **Scraping Report**: [Detailed statistics and logs](document/de_expsc_assessment_scrape_result.md) from the GitHub data collection process
+- **Analysis Report**: [Comprehensive results](document/de_expsc_assessment_spark_result.md) of the Spark data analysis
+- **SQL Script**: Implementation of [`average_resolution_by_month.sql`](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/sql/average_resolution_by_month.sql) used in Spark analysis
+
 ## Installation
 
 1. Clone this repository
@@ -50,12 +56,6 @@ python -B main.py
 1. **Scrape GitHub Issues & Comments Data**: Collects issue and comment data from GitHub repositories
 2. **Spark Analysis**: Performs data analysis on collected GitHub data using PySpark
 3. **Exit**: Quits the application
-
-## Output Reports
-
-- **Scraping Report**: [Detailed statistics and logs](document/de_expsc_assessment_scrape_result.md) from the GitHub data collection process
-- **Analysis Report**: [Comprehensive results](document/de_expsc_assessment_spark_result.md) of the Spark data analysis
-- **SQL Script**: Implementation of [`average_resolution_by_month.sql`](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/sql/average_resolution_by_month.sql) used in Spark analysis
 
 ## GitHub API Endpoints Used
 
