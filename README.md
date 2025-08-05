@@ -58,7 +58,7 @@ HADOOP_HOME="C:\\Program Files\\Hadoop\\hadoop-3.3.6"
 
 ## Usage
 
-Run the application:
+### Run the application:
 
 ```bash
 python -B main.py
