@@ -23,7 +23,7 @@ def init_table() -> bool:
                 id INTEGER PRIMARY KEY,
                 url TEXT NOT NULL UNIQUE,
                 issue_url UNIQUE,
-                issue_no INTEGER UNIQUE,
+                issue_no INTEGER,
                 total INTEGER,
                 owner_repo TEXT,
                 error TEXT,
