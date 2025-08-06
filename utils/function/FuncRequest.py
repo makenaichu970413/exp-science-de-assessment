@@ -16,6 +16,7 @@ from utils.constant import (
     BRIGHTDATA_ZONE,
     GITHUB_API_VERSION,
     GITHUB_TOKEN,
+    REQUEST_PAUSES_SECOND,
     REQUEST_RETRY_ATTEMPT,
     REQUEST_MAX_PER_MINUTE,
     PROXY,
@@ -55,8 +56,10 @@ def check_request_rate() -> None:
         request_timestamps = [ts for ts in request_timestamps if now - ts < 60]
         # If record length ≥60 requests in last 60s, pauses for 30 seconds
         if len(request_timestamps) >= REQUEST_MAX_PER_MINUTE:
-            # We are over the rate limit, sleep for 30 seconds
-            time.sleep(30)
+            print(
+                f'⌛ We are over the rate limit "{REQUEST_MAX_PER_MINUTE}" requests per minute, sleep for "{REQUEST_PAUSES_SECOND}" seconds'
+            )
+            time.sleep(REQUEST_PAUSES_SECOND)
 
         # Adds current request timestamp to tracking list
         request_timestamps.append(now)
