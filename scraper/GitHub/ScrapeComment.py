@@ -2,7 +2,6 @@
 from datetime import datetime
 import logging
 from pydantic import BaseModel, HttpUrl
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Utils
 from utils.function.FuncFile import export_json_comments
