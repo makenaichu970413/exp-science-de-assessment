@@ -14,7 +14,7 @@ This project scrapes GitHub issues and comments, then performs Spark analysis on
 
 ## Features
 
-- **Multithreading** implementation to accelerate scraping speed for maximum efficiency.
+- [**Multithreading**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/scraper/GitHub/Scrape.py#L118) implementation to accelerate scraping speed for maximum efficiency.
 - Robust **error-handling** mechanisms for failed requests.
 - Automated **recovery processes** to resume scraping after failures.
 - **Data Persistence**: Flexible storage options (CSV, JSON, SQLite)
