@@ -14,14 +14,19 @@ This project scrapes GitHub issues and comments, then performs Spark analysis on
 
 ## Features
 
-- **GitHub Data Scraping**: Automated collection of issues and comments with retry mechanism
-- **Data Validation**: Robust validation using `Pydantic` models to ensure data quality
+- **Multithreading** implementation to accelerate scraping speed for maximum efficiency.
+- Robust **error-handling** mechanisms for failed requests.
+- Automated **recovery processes** to resume scraping after failures.
+- **Data Persistence**: Flexible storage options (CSV, JSON, SQLite)
+- **IP/user-agent rotation** to prevent blocking by target services.
+- **Ethical delays** between requests to respect target servers.
+- **Request rate limiting** enforcement (e.g., 60 requests per minute) before executing requests.
+- Robust **data validation** using `Pydantic` models to ensure quality
+- Automated **reporting** for scraping metrics and analysis results
+- **Clean**, **structured**, and **maintainable** code.
 - **Spark Data Analysis**: Advanced processing of GitHub data including nested structure handling
 - **Menu-Driven Interface**: User-friendly console interface for easy operation
-- **Data Persistence**: Flexible storage options (CSV, JSON, SQLite)
 - **Workflow Visualization**: Mermaid diagrams documenting data flows
-- **Error Handling**: Comprehensive logging and status tracking
-- **Reporting**: Automated report generation for scraping and analysis results
 
 ## Installation
 
@@ -73,7 +78,7 @@ Menu:
 [1] Scrape GitHub Issues & Comments Data
 [2] Spark Analysis of GitHub Issues & Comments Data
 [3] Exit
-Enter your choice (1-3): 
+Enter your choice (1-3):
 ```
 
 1. **Scrape GitHub Issues & Comments Data**: Collects issue and comment data from GitHub repositories
@@ -104,10 +109,12 @@ The following GitHub API endpoints are used for data scraping:
   - Example: `https://api.github.com/repos/Uniswap/v3-core/issues/1049/comments`
 
 **Note on Rate Limits**:
+
 - Without authentication, the rate limit is 60 requests per hour.
 - With a personal access token, the rate limit increases to 5,000 requests per hour.
 
 Include the token in the [request header](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/utils/function/FuncRequest.py#L81) when making API calls:
+
 ```http
 Authorization: Bearer YOUR_GITHUB_TOKEN
 ```
