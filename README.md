@@ -26,7 +26,7 @@ This project scrapes GitHub issues and comments, then performs Spark analysis on
 - **Clean**, **structured**, and **maintainable** code.
 - **Spark Data Analysis**: Advanced processing of GitHub data including nested structure handling
 - [**Menu-Driven Interface**](#menu-options): User-friendly console interface for easy operation
-- [**Workflow Visualization**](#Scrape Data): Mermaid diagrams documenting data flows
+- [**Workflow Visualization**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/document/de_expsc_assessment_scrape_flow.png): Mermaid diagrams documenting data flows
 
 ## Installation
 
