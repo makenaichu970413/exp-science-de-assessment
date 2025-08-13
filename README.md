@@ -25,8 +25,8 @@ This project scrapes GitHub issues and comments, then performs Spark analysis on
 - Automated [**reporting**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/utils/function/FuncReport.py) for scraping metrics and analysis results
 - **Clean**, **structured**, and **maintainable** code.
 - **Spark Data Analysis**: Advanced processing of GitHub data including nested structure handling
-- **Menu-Driven Interface**: User-friendly console interface for easy operation
-- **Workflow Visualization**: Mermaid diagrams documenting data flows
+- [**Menu-Driven Interface**](#menu-options): User-friendly console interface for easy operation
+- [**Workflow Visualization**](#Scrape Data): Mermaid diagrams documenting data flows
 
 ## Installation
 
