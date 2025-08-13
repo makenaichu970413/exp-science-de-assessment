@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 # Load Environment
 load_dotenv()
 
+THREAD_WORKER = 3
 
 REQUEST_RETRY_ATTEMPT = 3
 REQUEST_MAX_PER_MINUTE = 60  #! GITHUB MAX 5000 per Hour

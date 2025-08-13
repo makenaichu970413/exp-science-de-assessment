@@ -2,6 +2,8 @@
 from datetime import datetime
 import logging
 from pydantic import BaseModel, HttpUrl
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 
 # Utils
 from utils.function.FuncFile import export_json_comments
@@ -16,6 +18,7 @@ from utils.constant import (
     STATUS_FAILED,
     STATUS_PENDING,
     STATUS_PROCESS,
+    THREAD_WORKER,
 )
 from utils.model.Igithub_issues import IGitHubIssue
 from utils.model.Iguthub_comments import IGitHubComment
@@ -141,61 +144,76 @@ def scrape_comments(owner_repo: str, issues: list[IGitHubIssue]) -> DScrapeComme
     # ? Replace the "/" into the "_" in "{owner}/{repository}"
     name = owner_repo.replace("/", "_")
 
-    # ? Start Scrapping Comments data from multiple Issues
-    for i, item in enumerate(list_issues, start=1):
+    # ? Use thread pool to scrapping Comments data concurrently
+    with ThreadPoolExecutor(max_workers=THREAD_WORKER) as executor:
 
-        url = item.url
-        issue_no = item.issue_no
-        props = PProcessComments(
-            index=i,
-            url=url,
-            owner_repo=get_github_owner_repo(str(url)),
-            issues_total=total,
-        )
+        # ? Create futures dictionary to track comment processing tasks
+        futures = {
+            executor.submit(
+                process_comments,
+                PProcessComments(
+                    index=i,
+                    url=item.url,
+                    owner_repo=owner_repo,
+                    issues_total=total,
+                ),
+            ): (
+                item.url,
+                item.issue_no,
+                i,
+            )  # ? Store metadata for result tracking
+            for i, item in enumerate(list_issues, start=1)
+        }
 
-        try:
-            # ? Make API request to get the Comments data per Issue
-            result_process_comments = process_comments(props)
+        # ? Process completed futures as they finish
+        for future in as_completed(futures):
 
-            # ? Get "error" from the "process_comments()"
-            error = result_process_comments.error
+            # ? Retrieve stored metadata for this future
+            url, issue_no, i = futures[future]
 
-            # ? Insert the "error" into "result.errors" list if found "error" from the "process_comments()"
-            if error:
-                result.errors.append(error)
+            try:
+                # ? Make API request to get the Comments data per Issue
+                result_process_comments = future.result()
 
-                # ? Block to run below code by raise the "error" to "Exception" block
-                raise Exception(error)
+                # ? Get "error" from the "process_comments()"
+                error = result_process_comments.error
 
-            # ? Update the "data" into current "result.data" list
-            data = result_process_comments.data
-            result.data.extend(data)
+                # ? Insert the "error" into "result.errors" list if found "error" from the "process_comments()"
+                if error:
+                    result.errors.append(error)
 
-            # ? Export NEW comments "data" into json and stored it under "temp" folder
-            output = export_json_comments(name=name, issue_no=issue_no, data=data)
+                    # ? Block to run below code by raise the "error" to "Exception" block
+                    raise Exception(error)
 
-            # ? Update the "result.output" with the json output path
-            result.output = output
+                # ? Update the "data" into current "result.data" list
+                data = result_process_comments.data
+                result.data.extend(data)
 
-            # ? Log the record status into "C - COMPLETED" and "total" comments found per issue
-            Log.upsert(
-                props=TGitHubIssueCommentLog(
-                    url=url, total=len(data), status=STATUS_COMPLETE
+                # ? Export NEW comments "data" into json and stored it under "temp" folder
+                output = export_json_comments(name=name, issue_no=issue_no, data=data)
+
+                # ? Update the "result.output" with the json output path
+                result.output = output
+
+                # ? Log the record status into "C - COMPLETED" and "total" comments found per issue
+                Log.upsert(
+                    props=TGitHubIssueCommentLog(
+                        url=url, total=len(data), status=STATUS_COMPLETE
+                    )
                 )
-            )
 
-        # ? If above raise "error" then go to "Exception" block
-        except Exception as err:
+            # ? If above raise "error" then go to "Exception" block
+            except Exception as err:
 
-            # ? Show the "msg_error"
-            logging.error(err)
+                # ? Show the "msg_error"
+                logging.error(err)
 
-            # ? Log the record status into "F - FAILED" and "err" message
-            Log.upsert(
-                props=TGitHubIssueCommentLog(
-                    url=url, error=str(err), status=STATUS_FAILED
+                # ? Log the record status into "F - FAILED" and "err" message
+                Log.upsert(
+                    props=TGitHubIssueCommentLog(
+                        url=url, error=str(err), status=STATUS_FAILED
+                    )
                 )
-            )
 
     # ? Generate and show Report from the log database after Comments data scrapping was Completed
     github_report_issue_comment(start=start_time, owner_repo=owner_repo)

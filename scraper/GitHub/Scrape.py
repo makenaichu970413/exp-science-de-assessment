@@ -1,6 +1,7 @@
 # Library
 from datetime import datetime
 from pydantic import BaseModel
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Scraper
 from scraper.GitHub.ScrapeInit import read_input
@@ -8,7 +9,7 @@ from scraper.GitHub.ScrapeComment import scrape_comments
 from scraper.GitHub.ScrapeIssues import scrape_issues
 
 # Utils
-from utils.constant import STATUS_COMPLETE, STATUS_PROCESS
+from utils.constant import STATUS_COMPLETE, STATUS_FAILED, STATUS_PROCESS, THREAD_WORKER
 from utils.function.FuncFile import export_csv_comments, export_csv_issues
 from utils.function.FuncGeneral import get_github_owner_repo
 from utils.function import FuncDBLogRepo as LogRepo
@@ -113,17 +114,44 @@ def run() -> None:
         github_report(start_time, completed=True)
         return
 
-    # ? Start Scrapping by looping the "url" item one by one from "URLs"
-    for i, url in enumerate(URLs, start=1):
+    # ? Use thread pool to scrapping Issues & Comments data concurrently
+    with ThreadPoolExecutor(max_workers=THREAD_WORKER) as executor:
 
-        # ? Start Scrapping Issues & Comments by passing props(url, i, total)
-        result = process_github(props=PProcessGitHub(url=url, index=i, total=total))
+        # ? Create futures dictionary to track GitHub processing tasks
+        futures = {
+            executor.submit(
+                process_github, PProcessGitHub(url=url, index=i, total=total)
+            ): (
+                url,
+                i,
+            )  # ? Store metadata for result tracking
+            for i, url in enumerate(URLs, start=1)
+        }
 
-        # ? Record the output path of csv file for exported Issues & Comments data
-        output = result.output
+        # ? Process completed futures as they finish
+        for future in as_completed(futures):
 
-        # ? Log the record status into "P - COMPLETE" in the database table
-        LogRepo.upsert(TGitHubRepoLog(url=url, status=STATUS_COMPLETE, output=output))
+            # ? Retrieve stored metadata for this future
+            url, i = futures[future]
+
+            try:
+                result = future.result()
+
+                # ? Record the output path of csv file for exported Issues & Comments data
+                output = result.output
+
+                # ? Log the record status into "P - COMPLETE" in the database table
+                LogRepo.upsert(
+                    TGitHubRepoLog(url=url, status=STATUS_COMPLETE, output=output)
+                )
+
+            except Exception as err:
+                msg_err = (
+                    f'❌ [{i}/{total}] FAILED_SCRAPE in "run.future" "{url}" : {err}'
+                )
+                LogRepo.upsert(
+                    TGitHubRepoLog(url=url, status=STATUS_FAILED, error=msg_err)
+                )
 
     # ? Generate and show Report from the log database after ALL scrapping was Completed
     github_report(start_time, completed=True)
