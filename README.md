@@ -15,14 +15,14 @@ This project scrapes GitHub issues and comments, then performs Spark analysis on
 ## Features
 
 - [**Multithreading**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/scraper/GitHub/Scrape.py#L118) implementation to accelerate scraping speed for maximum efficiency.
-- Robust **error-handling** mechanisms for failed requests.
-- Automated **recovery processes** to resume scraping after failures.
-- **Data Persistence**: Flexible storage options (CSV, JSON, SQLite)
-- **IP/user-agent rotation** to prevent blocking by target services.
-- **Ethical delays** between requests to respect target servers.
-- **Request rate limiting** enforcement (e.g., 60 requests per minute) before executing requests.
-- Robust **data validation** using `Pydantic` models to ensure quality
-- Automated **reporting** for scraping metrics and analysis results
+- Robust [**error-handling**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/scraper/GitHub/ScrapeIssues.py#L58) mechanisms for failed requests.
+- Automated [**recovery processes**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/scraper/GitHub/ScrapeInit.py#L39) to resume scraping after failures.
+- [**Data Persistence**](https://github.com/makenaichu970413/exp-science-de-assessment/tree/main/temp): Flexible storage options (CSV, JSON, SQLite)
+- [**IP/user-agent rotation**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/utils/function/FuncRequest.py#L79) to prevent blocking by target services.
+- [**Ethical delays**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/scraper/GitHub/ScrapeIssues.py#L81) between requests to respect target servers.
+- [**Request rate limiting**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/scraper/GitHub/ScrapeIssues.py#L61) enforcement (e.g., 60 requests per minute) before executing requests.
+- Robust [**data validation**](https://github.com/makenaichu970413/exp-science-de-assessment/tree/main/utils/model) using `Pydantic` models to ensure quality
+- Automated [**reporting**](https://github.com/makenaichu970413/exp-science-de-assessment/blob/main/utils/function/FuncReport.py) for scraping metrics and analysis results
 - **Clean**, **structured**, and **maintainable** code.
 - **Spark Data Analysis**: Advanced processing of GitHub data including nested structure handling
 - **Menu-Driven Interface**: User-friendly console interface for easy operation
